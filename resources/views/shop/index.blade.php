@@ -11,9 +11,9 @@ Mojiway Shopping Cart
                     <img src="{{ $product->imagePath }}" alt="..." class="img-responsive">
                     <div class="caption">
                            <h3>{{ $product->title }}<span>${{ $product->price }}</span></h3>
-                      <p>{{ $product->description }}</p>
+                      <p>{{ substr($product->description,0,300) }}{{ strlen($product->description) > 300 ? "..." : "" }}</p>
                       <div class="clearfix">
-                          <a href="#" class="btn btn-primary" role="button"><i class="fas fa-cart-plus"></i> Add to Cart</a> <a href="#" class="btn btn-default pull-right" role="button"><i class="fas fa-info"></i> More Info</a>
+                          <a href="{{ route('product.addToCart', ['id'=>$product->id]) }}" class="btn btn-primary" role="button"><i class="fas fa-cart-plus"></i> Add to Cart</a> <a href="#" class="btn btn-default pull-right" role="button"><i class="fas fa-info"></i> More Info</a>
                       </div>
                     </div>
                   </div>
