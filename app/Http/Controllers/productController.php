@@ -12,6 +12,10 @@ use Session;
 
 use App\Http\Requests;
 
+use Stripe\Stripe;
+
+use Stripe\Charge;
+
 class productController extends Controller
 {
     public function getIndex(){
@@ -43,5 +47,27 @@ class productController extends Controller
         $cart = new Cart($oldCart);
         $total = $cart->totalPrice;
         return view('shop.checkout', ['total'=>$total]);
+    }
+    public function postCheckout(Request $request){
+        if (!Session::has('cart')) {
+            return redirect()->route('shop.shoppingCart');
+        }
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+
+        Stripe::setApiKey('sk_test_RIfHhenYsXAXiSxL05VYdESc');
+        try {
+            Charge::create(array(
+                "amount" => $cart->totalPrice * 100,
+                "currency" => "usd",
+                "source" => $request->input('stripeToken'),
+                "description" => "Test Charge"
+            ));
+        }catch (\Exception $e) {
+            return redirect()->route('checkout')->with('error', $e->getMessage());
+        }
+
+        Session::forget('cart');
+        return redirect()->route('product.all')->with('success','Successfully Purchased Your Products!!!');
     }
 }
