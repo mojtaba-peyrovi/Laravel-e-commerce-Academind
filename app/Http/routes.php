@@ -23,6 +23,16 @@ Route::get('/', [
         'as' => 'product.addToCart'
     ]);
 
+    Route::get('/reduce/{id}',[
+        'uses' => 'productController@getReduceByOne',
+        'as' => 'product.reduceByOne'
+    ]);
+
+    Route::get('/remove/{id}',[
+        'uses'=>'productController@getRemoveItem',
+        'as' => 'product.remove'
+    ]);
+
     Route::get('/shopping-cart',[
         'uses' => 'productController@getCart',
         'as' => 'product.shoppingCart'
@@ -30,12 +40,14 @@ Route::get('/', [
 
     Route::get('/checkout',[
         'uses' => 'productController@getCheckout',
-        'as' => 'checkout'
+        'as' => 'checkout',
+        'middleware' =>'auth'
     ]);
 
     Route::post('/checkout',[
         'uses' => 'productController@postCheckout',
-        'as' => 'checkout'
+        'as' => 'checkout',
+        'middleware' =>'auth'
     ]);
 
 Route::group(['prefix' => 'user'], function(){

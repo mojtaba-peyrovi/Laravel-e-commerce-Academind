@@ -20,9 +20,14 @@
                     <label for="password">Password: </label>
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
-                    <input type="submit" value="Sign In" class="btn btn-primary">
+
+                    <input type="submit" value="Sign In" class="btn btn-primary btn-block">
+                    <p class="text-center" style="margin-top:10px;">Dont have an account yet?<a href="{{ route('user.signup') }}"> Sign Up!</a></p>
+
+
 
             </form>
+
         </div>
     </div>
 @endsection
